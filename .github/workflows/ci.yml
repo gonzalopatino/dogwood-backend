@@ -1,0 +1,61 @@
+# Runs on every push and pull request.
+# Must pass before a PR can be merged into main.
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    # Spins up a real PostgreSQL alongside your tests
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: dogwood_test
+          POSTGRES_USER: dogwood
+          POSTGRES_PASSWORD: dogwood
+        ports:
+          - 5432:5432
+        # Wait until Postgres is ready before running steps
+        options: >-
+          --health-cmd="pg_isready -U dogwood"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      # 1. Pull the code
+      - uses: actions/checkout@v4
+
+      # 2. Install Python
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements/dev.txt
+
+      # 4. Lint — checks code style
+      - name: Lint
+        run: |
+          ruff check .
+          ruff format --check .
+
+      # 5. Test — runs all tests, fails if coverage < 80%
+      - name: Test
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.dev
+          DB_NAME: dogwood_test
+          DB_USER: dogwood
+          DB_PASSWORD: dogwood
+          DB_HOST: localhost
+          DB_PORT: 5432
+        run: pytest --cov=apps --cov-fail-under=80

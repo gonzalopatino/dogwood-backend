@@ -1,0 +1,38 @@
+# docker-compose.yml — Local development only.
+# Run: docker compose up
+# This gives you Django + PostgreSQL running locally.
+
+services:
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: dogwood
+      POSTGRES_USER: dogwood
+      POSTGRES_PASSWORD: dogwood
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    # Override CMD for development: use Django's dev server instead of gunicorn
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      # Mount your code so changes appear instantly (no rebuild needed)
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+      DB_NAME: dogwood
+      DB_USER: dogwood
+      DB_PASSWORD: dogwood
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

@@ -1,0 +1,31 @@
+# Runs ONLY when code is pushed to the main branch (after CI passes).
+# SSHs into the EC2 server and pulls the latest code.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Only deploy if CI passes (this job runs after push, which triggers CI too)
+    needs: []
+
+    steps:
+      # 1. SSH into EC2 and run deployment commands
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/dogwood-backend
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements/prod.txt
+            python manage.py migrate --noinput
+            python manage.py collectstatic --noinput
+            sudo systemctl restart gunicorn

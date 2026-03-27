@@ -1,0 +1,33 @@
+[project]
+name = "dogwood-backend"
+version = "0.1.0"
+description = "Backend API for Dogwood Seniors 50 Plus website"
+requires-python = ">=3.12"
+
+# ─── Pytest ──────────────────────────────────────────────
+[tool.pytest.ini_options]
+# Tells pytest which Django settings file to use
+DJANGO_SETTINGS_MODULE = "config.settings.dev"
+# Look for tests in the tests/ folder
+testpaths = ["tests"]
+# Only files matching this pattern are treated as test files
+python_files = ["test_*.py"]
+
+# ─── Ruff (linter + formatter) ───────────────────────────
+[tool.ruff]
+# Maximum line length
+line-length = 120
+# Only lint our code, not third-party stuff
+src = ["apps", "config", "tests"]
+
+[tool.ruff.lint]
+# Rules to enforce (E=pycodestyle errors, F=pyflakes, I=import sorting)
+select = ["E", "F", "I"]
+# Rules to ignore
+ignore = [
+    "E501",   # line too long — ruff format handles this
+]
+
+[tool.ruff.format]
+# Use double quotes (Python convention)
+quote-style = "double"
