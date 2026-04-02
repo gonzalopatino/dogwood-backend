@@ -1,0 +1,23 @@
+# /etc/systemd/system/gunicorn.service
+#
+# What this does:
+# - Runs Gunicorn (which runs Django) as a background service
+# - Automatically starts on server boot
+# - Restarts if it crashes
+# - Loads environment variables from /home/ubuntu/dogwood-backend/.env
+
+[Unit]
+Description=Gunicorn daemon for Dogwood Backend
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/dogwood-backend
+EnvironmentFile=/home/ubuntu/dogwood-backend/.env
+ExecStart=/home/ubuntu/dogwood-backend/venv/bin/gunicorn config.wsgi:application --bind 127.0.0.1:8000 --workers 2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
