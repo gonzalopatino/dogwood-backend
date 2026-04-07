@@ -22,17 +22,17 @@ The public API is **read-only**. Nobody logs in on the frontend. Staff manage ev
 
 ## SRS Requirements You're Covering
 
-| Req ID | What It Means |
-|--------|---------------|
-| FR-01 | Pages have: title, slug, body (HTML), status (draft or published), display_order, timestamps |
-| FR-02 | Pages can have multiple downloadable file attachments |
-| FR-03 | API endpoint to get one page by its slug, returning body + attachments |
-| FR-04 | API endpoint to list all published pages (for building the nav menu) |
-| FR-05 | Posts have: title, slug, body (HTML), featured image, status, published date, author |
-| FR-06 | Posts can have multiple downloadable file attachments |
-| FR-07 | API endpoint to list published posts, newest first, with pagination |
-| FR-08 | API endpoint to get one post by its slug, returning body + attachments |
-| FR-27 | Django Admin with search, filters, and inline attachment editing |
+| Req ID | What It Means                                                                                |
+| ------ | -------------------------------------------------------------------------------------------- |
+| FR-01  | Pages have: title, slug, body (HTML), status (draft or published), display_order, timestamps |
+| FR-02  | Pages can have multiple downloadable file attachments                                        |
+| FR-03  | API endpoint to get one page by its slug, returning body + attachments                       |
+| FR-04  | API endpoint to list all published pages (for building the nav menu)                         |
+| FR-05  | Posts have: title, slug, body (HTML), featured image, status, published date, author         |
+| FR-06  | Posts can have multiple downloadable file attachments                                        |
+| FR-07  | API endpoint to list published posts, newest first, with pagination                          |
+| FR-08  | API endpoint to get one post by its slug, returning body + attachments                       |
+| FR-27  | Django Admin with search, filters, and inline attachment editing                             |
 
 ---
 
