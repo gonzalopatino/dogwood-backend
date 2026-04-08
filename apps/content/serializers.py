@@ -10,31 +10,35 @@ from .models import Attachment, Page, Post
 class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment
-        fields = ['title', 'file', 'display_order']
+        fields = ["title", "file", "display_order"]
+
 
 class PageSerializer(serializers.ModelSerializer):
-    attachments = AttachmentSerializer(many = True, read_only = True)
+    attachments = AttachmentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Page
-        fields = ['title', 'slug','body','attachments']
-        
+        fields = ["title", "slug", "body", "attachments"]
+
 
 class PageListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
-        fields = ['title', 'slug', 'display_order']
+        fields = ["title", "slug", "display_order"]
 
 
 ## -- Posts -- ##
 class PostSerializer(serializers.ModelSerializer):
-    attachments = AttachmentSerializer(many = True, read_only = True)
+    attachments = AttachmentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Post
-        fields = ['title', 'slug','body','attachments']
-        
-        
+        fields = ["title", "slug", "body", "attachments", "featured_image"]
+
+
 class PostListSerializer(serializers.ModelSerializer):
-    attachments = AttachmentSerializer(many = True ,read_only = True)
+    attachments = AttachmentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'body', 'published_at', 'attachments']
+        fields = ["title", "slug", "body", "published_at", "attachments", "featured_image"]

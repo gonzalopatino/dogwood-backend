@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,52 +14,101 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Page',
+            name="Page",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('slug', models.SlugField(help_text="URL-friendly identifier, e.g. 'insurance'", max_length=200, unique=True)),
-                ('body', models.TextField(help_text='Rich-text content (HTML)')),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('published', 'Published')], default='draft', max_length=10)),
-                ('display_order', models.PositiveIntegerField(default=0, help_text='Controls the order pages appear in navigation. Lower = first.')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=200)),
+                (
+                    "slug",
+                    models.SlugField(
+                        help_text="URL-friendly identifier, e.g. 'insurance'", max_length=200, unique=True
+                    ),
+                ),
+                ("body", models.TextField(help_text="Rich-text content (HTML)")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("draft", "Draft"), ("published", "Published")], default="draft", max_length=10
+                    ),
+                ),
+                (
+                    "display_order",
+                    models.PositiveIntegerField(
+                        default=0, help_text="Controls the order pages appear in navigation. Lower = first."
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
             options={
-                'ordering': ['display_order', 'title'],
+                "ordering": ["display_order", "title"],
             },
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=300)),
-                ('slug', models.SlugField(max_length=300, unique=True)),
-                ('body', models.TextField(help_text='Rich-text content (HTML)')),
-                ('featured_image', models.ImageField(blank=True, upload_to='posts/images/%Y/%m/')),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('published', 'Published'), ('archived', 'Archived')], default='draft', max_length=10)),
-                ('published_at', models.DateTimeField(blank=True, help_text='When this post goes live', null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('author', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='posts', to=settings.AUTH_USER_MODEL)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=300)),
+                ("slug", models.SlugField(max_length=300, unique=True)),
+                ("body", models.TextField(help_text="Rich-text content (HTML)")),
+                ("featured_image", models.ImageField(blank=True, upload_to="posts/images/%Y/%m/")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("draft", "Draft"), ("published", "Published"), ("archived", "Archived")],
+                        default="draft",
+                        max_length=10,
+                    ),
+                ),
+                ("published_at", models.DateTimeField(blank=True, help_text="When this post goes live", null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="posts",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-published_at'],
+                "ordering": ["-published_at"],
             },
         ),
         migrations.CreateModel(
-            name='Attachment',
+            name="Attachment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('file', models.FileField(upload_to='attachments/%Y/%m/')),
-                ('display_order', models.PositiveIntegerField(default=0)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='attachments', to='content.page')),
-                ('post', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='attachments', to='content.post')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=200)),
+                ("file", models.FileField(upload_to="attachments/%Y/%m/")),
+                ("display_order", models.PositiveIntegerField(default=0)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "page",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="attachments",
+                        to="content.page",
+                    ),
+                ),
+                (
+                    "post",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="attachments",
+                        to="content.post",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['display_order'],
+                "ordering": ["display_order"],
             },
         ),
     ]
