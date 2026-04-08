@@ -1,7 +1,6 @@
 import pytest
-from django.test import Client
-
 from apps.activities.models import ActivityGroup, Category
+from django.test import Client
 
 
 @pytest.fixture
