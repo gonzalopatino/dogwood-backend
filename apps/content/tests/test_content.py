@@ -1,8 +1,7 @@
 import pytest
+from apps.content.models import Attachment, Page, Post
 from django.test import Client
 from django.utils import timezone
-
-from apps.content.models import Attachment, Page, Post
 
 
 @pytest.fixture
