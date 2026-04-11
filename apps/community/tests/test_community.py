@@ -1,7 +1,6 @@
 import pytest
-from django.test import Client
-
 from apps.community.models import SupportResource
+from django.test import Client
 
 
 @pytest.fixture

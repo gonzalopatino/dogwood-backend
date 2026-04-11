@@ -1,15 +1,16 @@
 import uuid
 
 import pytest
-from django.test import Client
-
 from apps.info.models import BoardMember, ContactSubmission, EmailSubscription
+from django.test import Client
 
 
 @pytest.fixture
 def board_members(db):
     BoardMember.objects.create(name="Wilhelmina Martin", position="President", term_year="2025-2026", is_current=True)
-    BoardMember.objects.create(name="Bob Willems", position="First Vice President", term_year="2025-2026", is_current=True)
+    BoardMember.objects.create(
+        name="Bob Willems", position="First Vice President", term_year="2025-2026", is_current=True
+    )
     BoardMember.objects.create(name="Past Member", position="Secretary", term_year="2023-2024", is_current=False)
 
 

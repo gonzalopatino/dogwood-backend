@@ -57,10 +57,16 @@ docker compose exec web python manage.py makemigrations community
 docker compose exec web python manage.py migrate
 
 # 5. Run your tests
-docker compose exec web pytest tests/test_community.py -v
+#docker compose exec web pytest tests/test_community.py -v
+docker compose exec web pytest apps/community/tests/test_community.py -v
+
 
 # 6. Run the linter
+# docker compose exec web ruff apps/community/
 docker compose exec web ruff check apps/community/
+
+
+# docker compose exec web ruff format apps/community/
 docker compose exec web ruff format --check apps/community/
 
 # 7. If everything passes, commit and push
